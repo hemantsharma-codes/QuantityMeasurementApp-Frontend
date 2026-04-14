@@ -1,0 +1,43 @@
+<!-- ═══════════════════════════════════════
+     PROFILE SECTION
+═══════════════════════════════════════ -->
+<div id="profile-page" class="app-section" style="display:none">
+  <div class="page-header profile-page-inner">
+    <h1>Profile</h1>
+    <p>// your account settings</p>
+  </div>
+
+  <div class="profile-page-inner">
+
+    <!-- Info Card -->
+    <div class="profile-info-card">
+      <div class="profile-avatar-lg" id="profile-avatar">U</div>
+      <div class="profile-name" id="profile-name">—</div>
+      <div class="profile-email" id="profile-email">—</div>
+      <span class="role-pill profile-role" id="profile-role">User</span>
+    </div>
+
+    <!-- Change Password -->
+    <div class="password-card">
+      <h2>Change Password</h2>
+
+      <div class="field">
+        <label>Current Password</label>
+        <input type="password" id="cur-pass" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <div class="field">
+        <label>New Password</label>
+        <input type="password" id="new-pass" placeholder="min 6 chars" autocomplete="new-password" />
+      </div>
+      <div class="field">
+        <label>Confirm New Password</label>
+        <input type="password" id="conf-pass" placeholder="repeat new password" autocomplete="new-password" />
+      </div>
+
+      <button class="btn btn-primary mt-16" onclick="ProfileController.updatePassword()">
+        Update Password
+      </button>
+    </div>
+
+  </div>
+</div>

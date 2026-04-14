@@ -1,0 +1,95 @@
+/* ═══════════════════════════════════════════
+   QUANTIX — Page-Specific Styles
+═══════════════════════════════════════════ */
+
+/* ══ AUTH PAGE ══ */
+#auth-page {
+  min-height: calc(100vh - var(--nav-h));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+#auth-page.active { display: flex; }
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 40px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-lg), var(--glow);
+}
+
+.auth-card::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(124,106,255,.12), transparent 68%);
+  pointer-events: none;
+}
+
+.auth-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(255,106,155,.07), transparent 68%);
+  pointer-events: none;
+}
+
+.auth-guest-hint {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: .8rem;
+}
+
+/* ══ CALCULATOR PAGE ══ */
+#calculator-page .op-section { display: none; }
+#calculator-page .op-section.active { display: block; animation: fadeUp .3s var(--ease) both; }
+
+/* ══ HISTORY PAGE ══ */
+.history-meta {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+
+/* ══ ADMIN PAGE ══ */
+.admin-section { margin-bottom: 40px; }
+
+.update-role-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  max-width: 500px;
+}
+
+/* ══ PROFILE PAGE ══ */
+.profile-page-inner { max-width: 580px; }
+
+.profile-info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.password-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+}
+
+.password-card h2 { margin-bottom: 22px; }

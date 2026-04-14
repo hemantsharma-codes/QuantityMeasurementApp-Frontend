@@ -1,0 +1,232 @@
+<!-- ═══════════════════════════════════════
+     CALCULATOR SECTION
+═══════════════════════════════════════ -->
+<div id="calculator-page" class="app-section">
+  <div class="page-header">
+    <h1>Calculator</h1>
+    <p>// convert, compare, and compute measurements</p>
+  </div>
+
+  <!-- Operation Tabs -->
+  <div class="op-tabs">
+    <button class="op-tab" data-op="convert" onclick="CalcController.switchOp('convert')">Convert</button>
+    <button class="op-tab" data-op="compare" onclick="CalcController.switchOp('compare')">Compare</button>
+    <button class="op-tab" data-op="add" onclick="CalcController.switchOp('add')">Add</button>
+    <button class="op-tab" data-op="subtract" onclick="CalcController.switchOp('subtract')">Subtract</button>
+    <button class="op-tab" data-op="divide" onclick="CalcController.switchOp('divide')">Divide</button>
+  </div>
+
+  <!-- ── CONVERT ── -->
+  <div class="calc-card op-section" id="op-convert">
+    <span class="calc-card-op-symbol">→</span>
+    <h2><span>Convert</span> — Unit Conversion</h2>
+
+    <div class="field">
+      <label>Quantity Type</label>
+      <select id="conv-type" onchange="CalcController.onTypeChange('conv')">
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value</label>
+        <input type="number" id="conv-value" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>From Unit</label>
+        <select id="conv-unit-from"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>To Unit</label>
+      <select id="conv-unit-to"></select>
+    </div>
+
+    <button class="btn btn-primary mt-8" onclick="CalcController.doConvert()">Convert →</button>
+
+    <div class="result-box" id="res-convert">
+      <div class="result-box-label">Result</div>
+      <div class="result-box-value" id="res-convert-val"></div>
+    </div>
+  </div>
+
+  <!-- ── COMPARE ── -->
+  <div class="calc-card op-section" id="op-compare">
+    <span class="calc-card-op-symbol">=?</span>
+    <h2><span>Compare</span> — Equality Check</h2>
+
+    <div class="field">
+      <label>Quantity Type</label>
+      <select id="cmp-type" onchange="CalcController.onTypeChange('cmp')">
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" id="cmp-val1" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select id="cmp-unit1"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" id="cmp-val2" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select id="cmp-unit2"></select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-8" onclick="CalcController.doCompare()">Compare →</button>
+
+    <div class="result-box" id="res-compare">
+      <div class="result-box-label">Result</div>
+      <div class="result-box-value" id="res-compare-val"></div>
+    </div>
+  </div>
+
+  <!-- ── ADD ── -->
+  <div class="calc-card op-section" id="op-add">
+    <span class="calc-card-op-symbol">+</span>
+    <h2><span>Add</span> — Sum Two Quantities</h2>
+
+    <div class="field">
+      <label>Quantity Type</label>
+      <select id="add-type" onchange="CalcController.onTypeChange('add')">
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" id="add-val1" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select id="add-unit1"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" id="add-val2" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select id="add-unit2"></select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-8" onclick="CalcController.doAdd()">Add →</button>
+
+    <div class="result-box" id="res-add">
+      <div class="result-box-label">Result</div>
+      <div class="result-box-value" id="res-add-val"></div>
+    </div>
+  </div>
+
+  <!-- ── SUBTRACT ── -->
+  <div class="calc-card op-section" id="op-subtract">
+    <span class="calc-card-op-symbol">−</span>
+    <h2><span>Subtract</span> — Difference</h2>
+
+    <div class="field">
+      <label>Quantity Type</label>
+      <select id="sub-type" onchange="CalcController.onTypeChange('sub')">
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" id="sub-val1" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select id="sub-unit1"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" id="sub-val2" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select id="sub-unit2"></select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Result Unit</label>
+      <select id="sub-result-unit"></select>
+    </div>
+
+    <button class="btn btn-primary mt-8" onclick="CalcController.doSubtract()">Subtract →</button>
+
+    <div class="result-box" id="res-subtract">
+      <div class="result-box-label">Result</div>
+      <div class="result-box-value" id="res-subtract-val"></div>
+    </div>
+  </div>
+
+  <!-- ── DIVIDE ── -->
+  <div class="calc-card op-section" id="op-divide">
+    <span class="calc-card-op-symbol">÷</span>
+    <h2><span>Divide</span> — Ratio</h2>
+
+    <div class="field">
+      <label>Quantity Type</label>
+      <select id="div-type" onchange="CalcController.onTypeChange('div')">
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1 (Dividend)</label>
+        <input type="number" id="div-val1" placeholder="0" min="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select id="div-unit1"></select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2 (Divisor)</label>
+        <input type="number" id="div-val2" placeholder="cannot be 0" min="0.000001" step="any" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select id="div-unit2"></select>
+      </div>
+    </div>
+
+    <button class="btn btn-primary mt-8" onclick="CalcController.doDivide()">Divide →</button>
+
+    <div class="result-box" id="res-divide">
+      <div class="result-box-label">Ratio</div>
+      <div class="result-box-value" id="res-divide-val"></div>
+    </div>
+  </div>
+
+</div>

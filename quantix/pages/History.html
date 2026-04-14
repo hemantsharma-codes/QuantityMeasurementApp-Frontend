@@ -1,0 +1,53 @@
+<!-- ═══════════════════════════════════════
+     HISTORY SECTION
+═══════════════════════════════════════ -->
+<div id="history-page" class="app-section" style="display:none">
+  <div class="page-header">
+    <h1>My History</h1>
+    <p>// your past calculations</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <select id="hist-op-filter" onchange="HistoryController.load()">
+      <option value="">All Operations</option>
+      <option value="Convert">Convert</option>
+      <option value="Compare">Compare</option>
+      <option value="Add">Add</option>
+      <option value="Subtract">Subtract</option>
+      <option value="Divide">Divide</option>
+    </select>
+
+    <select id="hist-cat-filter" onchange="HistoryController.load()">
+      <option value="">All Categories</option>
+      <option value="Length">Length</option>
+      <option value="Weight">Weight</option>
+      <option value="Volume">Volume</option>
+      <option value="Temperature">Temperature</option>
+    </select>
+
+    <button class="btn btn-danger btn-sm" onclick="HistoryController.clearAll()">
+      Clear All
+    </button>
+
+    <button class="btn btn-ghost btn-sm" onclick="HistoryController.load()">
+      ↻ Refresh
+    </button>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Category</th>
+          <th>Input</th>
+          <th>Result</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="history-body"></tbody>
+    </table>
+  </div>
+</div>

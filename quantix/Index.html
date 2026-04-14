@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuantiX — Measurement Calculator</title>
+
+  <!-- ── CSS (order matters) ── -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+
+<body>
+  <div id="app">
+
+    <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+    <nav class="navbar">
+      <div class="navbar-logo">Quanti<span>X</span></div>
+
+      <div class="navbar-right">
+        <!-- Logged-in user badge -->
+        <div class="user-badge" id="user-badge">
+          <div class="user-avatar" id="nav-avatar">U</div>
+          <span id="nav-username">User</span>
+          <span class="role-pill" id="nav-role">User</span>
+        </div>
+
+        <!-- Logout (visible when logged in) -->
+        <button class="btn btn-ghost btn-sm hidden" id="logout-btn" onclick="AuthController.logout()">
+          Logout
+        </button>
+
+        <!-- Sign In (visible when logged out) -->
+        <button class="btn btn-primary btn-sm" id="signin-btn" onclick="Router.goToAuth()">
+          Sign In
+        </button>
+      </div>
+    </nav>
+
+    <!-- ══════════════════════════════════════
+       APP BODY
+  ══════════════════════════════════════ -->
+    <div class="app-body">
+
+      <!-- ── SIDEBAR (desktop) ── -->
+      <aside class="sidebar">
+        <span class="nav-group-label">Main</span>
+
+        <div class="nav-item" data-nav="calculator" onclick="Router.navigate('calculator')">
+          <span class="nav-icon">⚗️</span> Calculator
+        </div>
+
+        <div class="nav-item" data-nav="history" data-auth-show="user" onclick="Router.navigate('history')">
+          <span class="nav-icon">🕐</span> My History
+        </div>
+
+        <div class="nav-sep"></div>
+        <span class="nav-group-label">Account</span>
+
+        <div class="nav-item hidden" data-nav="profile" data-auth-show="user" onclick="Router.navigate('profile')">
+          <span class="nav-icon">👤</span> Profile
+        </div>
+
+        <div class="nav-item hidden" data-nav="admin" data-auth-show="Admin" onclick="Router.navigate('admin')">
+          <span class="nav-icon">🛡️</span> Admin
+        </div>
+      </aside>
+
+      <!-- ── CONTENT ── -->
+      <main class="content">
+        <div class="content-inner">
+
+          <!-- AUTH PAGE -->
+          <div id="auth-page" class="page">
+            <!-- injected from pages/auth.html -->
+          </div>
+
+          <!-- APP PAGE (holds all sub-sections) -->
+          <div id="app-page" class="page" style="display:none">
+            <!-- injected from pages/*.html -->
+          </div>
+
+        </div>
+      </main>
+
+    </div><!-- .app-body -->
+
+    <!-- ══════════════════════════════════════
+       MOBILE BOTTOM NAV
+  ══════════════════════════════════════ -->
+    <nav class="mobile-nav">
+      <div class="mob-nav-items">
+
+        <div class="mob-nav-item" data-nav="calculator" onclick="Router.navigate('calculator')">
+          <span class="mob-icon">⚗️</span>
+          <span>Calc</span>
+        </div>
+
+        <div class="mob-nav-item" data-nav="history" data-auth-show="user" onclick="Router.navigate('history')">
+          <span class="mob-icon">🕐</span>
+          <span>History</span>
+        </div>
+
+        <div class="mob-nav-item hidden" data-nav="profile" data-auth-show="user" onclick="Router.navigate('profile')">
+          <span class="mob-icon">👤</span>
+          <span>Profile</span>
+        </div>
+
+        <div class="mob-nav-item hidden" data-nav="admin" data-auth-show="Admin" onclick="Router.navigate('admin')">
+          <span class="mob-icon">🛡️</span>
+          <span>Admin</span>
+        </div>
+
+      </div>
+    </nav>
+
+  </div><!-- #app -->
+
+  <!-- Toast Notification -->
+  <div id="toast"></div>
+
+  <!-- ══════════════════════════════════════
+     JS — Config & Services (load first)
+══════════════════════════════════════ -->
+  <script src="js/config.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/router.js"></script>
+
+  <!-- Controllers -->
+  <script src="js/calculator.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/profile.js"></script>
+  <script src="js/admin.js"></script>
+
+  <!-- Page Loader + App Bootstrap -->
+  <script>
+    // ── Inline-load HTML partials into the DOM ──
+    // Since this is a plain HTML/JS project (no bundler),
+    // we load page partials via fetch and inject them.
+
+    const PAGE_PARTIALS = [
+      { file: 'pages/auth.html', target: '#auth-page', replace: true },
+      { file: 'pages/calculator.html', target: '#app-page', replace: false },
+      { file: 'pages/history.html', target: '#app-page', replace: false },
+      { file: 'pages/profile.html', target: '#app-page', replace: false },
+      { file: 'pages/admin.html', target: '#app-page', replace: false },
+    ];
+
+    async function loadPartials() {
+      for (const p of PAGE_PARTIALS) {
+        const res = await fetch(p.file);
+        const html = await res.text();
+        const el = document.querySelector(p.target);
+        if (p.replace) el.innerHTML = html;
+        else el.insertAdjacentHTML('beforeend', html);
+      }
+    }
+
+    // Load partials first, then bootstrap app
+    loadPartials().then(() => {
+      // Dynamically load app.js after partials are ready
+      const s = document.createElement('script');
+      s.src = 'js/app.js';
+      document.body.appendChild(s);
+    });
+  </script>
+
+</body>
+
+</html>

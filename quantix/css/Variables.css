@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════
+   QUANTIX — Design Tokens & CSS Variables
+═══════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap');
+
+:root {
+  /* ── Colors ── */
+  --bg:        #080810;
+  --surface:   #10101c;
+  --surface2:  #18182a;
+  --surface3:  #1f1f30;
+  --border:    #252538;
+  --border2:   #2e2e48;
+
+  --accent:    #7c6aff;
+  --accent-dim: rgba(124, 106, 255, 0.15);
+  --accent2:   #ff6a9b;
+  --accent3:   #5ef0c4;
+  --accent4:   #f0c45e;
+
+  --text:      #eaeaf5;
+  --text-dim:  #9090b0;
+  --muted:     #5a5a7a;
+
+  --success:   #4ade80;
+  --error:     #f87171;
+  --warning:   #fbbf24;
+  --info:      #60a5fa;
+
+  /* ── Typography ── */
+  --font-display: 'Syne', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+
+  /* ── Spacing ── */
+  --radius-sm:  8px;
+  --radius:     14px;
+  --radius-lg:  20px;
+  --radius-xl:  28px;
+
+  /* ── Shadows ── */
+  --shadow-sm:  0 2px 8px rgba(0,0,0,.4);
+  --shadow:     0 4px 24px rgba(0,0,0,.5);
+  --shadow-lg:  0 8px 48px rgba(0,0,0,.6);
+  --glow:       0 0 32px rgba(124,106,255,.2);
+
+  /* ── Layout ── */
+  --sidebar-w:  230px;
+  --nav-h:      64px;
+  --content-max: 1100px;
+
+  /* ── Transitions ── */
+  --ease:       cubic-bezier(.4,0,.2,1);
+  --ease-out:   cubic-bezier(.0,0,.2,1);
+  --ease-spring: cubic-bezier(.34,1.56,.64,1);
+}
