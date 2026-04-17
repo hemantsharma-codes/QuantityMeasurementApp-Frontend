@@ -1,0 +1,45 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Profile</h1>
+    <p>// your account settings</p>
+  </div>
+
+  <div class="profile-inner">
+
+    <!-- Info Card -->
+    <div class="profile-info-card">
+      <div class="profile-avatar">{{ getInitial() }}</div>
+      <div class="profile-name">{{ user?.username }}</div>
+      <div class="profile-email">{{ user?.email }}</div>
+      <span class="role-pill" [class.admin]="user?.role === 'Admin'">{{ user?.role }}</span>
+    </div>
+
+    <!-- Password Card -->
+    <div class="password-card">
+      <h2>Change Password</h2>
+
+      <div class="msg-box" *ngIf="message" [class.error]="isError" [class.success]="!isError">
+        {{ message }}
+      </div>
+
+      <div class="field">
+        <label>Current Password</label>
+        <input type="password" [(ngModel)]="currentPassword" placeholder="••••••••"/>
+      </div>
+      <div class="field">
+        <label>New Password</label>
+        <input type="password" [(ngModel)]="newPassword" placeholder="min 6 characters"/>
+      </div>
+      <div class="field">
+        <label>Confirm New Password</label>
+        <input type="password" [(ngModel)]="confirmNewPassword" placeholder="repeat new password"/>
+      </div>
+
+      <button class="btn btn-primary" style="margin-top:16px"
+              (click)="updatePassword()" [disabled]="isLoading">
+        {{ isLoading ? 'Updating...' : 'Update Password' }}
+      </button>
+    </div>
+
+  </div>
+</div>
