@@ -1,0 +1,60 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>My History</h1>
+    <p>// your past calculations</p>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <select [(ngModel)]="filterOp" (ngModelChange)="load()">
+      <option value="">All Operations</option>
+      <option value="Convert">Convert</option>
+      <option value="Compare">Compare</option>
+      <option value="Add">Add</option>
+      <option value="Subtract">Subtract</option>
+      <option value="Divide">Divide</option>
+    </select>
+    <select [(ngModel)]="filterCat" (ngModelChange)="load()">
+      <option value="">All Categories</option>
+      <option value="Length">Length</option>
+      <option value="Weight">Weight</option>
+      <option value="Volume">Volume</option>
+      <option value="Temperature">Temperature</option>
+    </select>
+    <button class="btn btn-danger btn-sm" (click)="clearAll()">Clear All</button>
+    <button class="btn btn-ghost btn-sm" (click)="load()">↻ Refresh</button>
+  </div>
+
+  <div class="loading-row" *ngIf="isLoading">Loading...</div>
+
+  <div class="empty-state" *ngIf="!isLoading && historyList.length === 0">
+    <span class="icon">📭</span>
+    <p>No calculations yet. Try the calculator!</p>
+  </div>
+
+  <div class="table-wrap" *ngIf="!isLoading && historyList.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Operation</th>
+          <th>Category</th>
+          <th>Input</th>
+          <th>Result</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let h of historyList">
+          <td><span class="op-chip" [ngClass]="h.operation.toLowerCase()">{{ h.operation }}</span></td>
+          <td>{{ h.category }}</td>
+          <td class="text-muted">
+            {{ h.value1 }} {{ h.unit1 }}
+            <span *ngIf="h.value2 != null"> &amp; {{ h.value2 }} {{ h.unit2 }}</span>
+          </td>
+          <td class="text-result">{{ h.resultValue }} {{ h.resultUnit }}</td>
+          <td class="text-muted">{{ formatDate(h.createdAt) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

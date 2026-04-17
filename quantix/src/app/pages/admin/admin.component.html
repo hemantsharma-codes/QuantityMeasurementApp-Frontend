@@ -1,0 +1,138 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Admin Panel</h1>
+    <p>// manage users and records</p>
+  </div>
+
+  <div class="msg-box mb-16" *ngIf="message" [class.error]="isError" [class.success]="!isError">
+    {{ message }}
+  </div>
+
+  <!-- ALL USERS -->
+  <div class="admin-section">
+    <div class="section-title">
+      <span>All Users</span>
+      <button class="btn btn-ghost btn-sm" (click)="loadUsers()">↻ Refresh</button>
+    </div>
+    <div class="loading-row" *ngIf="usersLoading">Loading...</div>
+    <div class="table-wrap" *ngIf="!usersLoading">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Joined</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="users.length === 0">
+            <td colspan="6" class="empty-row">No users found</td>
+          </tr>
+          <tr *ngFor="let u of users">
+            <td class="text-muted">#{{ u.id }}</td>
+            <td>{{ u.username }}</td>
+            <td class="text-muted">{{ u.email }}</td>
+            <td><span class="role-pill" [class.admin]="u.role==='Admin'">{{ u.role }}</span></td>
+            <td class="text-muted">{{ formatDate(u.createdAt) }}</td>
+            <td>
+              <button class="btn btn-ghost btn-sm" (click)="viewUserHistory(u.id, u.username)">
+                View History
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- UPDATE ROLE -->
+  <div class="admin-section">
+    <div class="section-title">Update User Role</div>
+    <div class="role-card">
+      <div class="field">
+        <label>User Email</label>
+        <input type="email" [(ngModel)]="roleEmail" placeholder="user@example.com" />
+      </div>
+      <div class="field">
+        <label>New Role</label>
+        <select [(ngModel)]="roleSelect">
+          <option value="User">User</option>
+          <option value="Admin">Admin</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" style="margin-top:8px" (click)="updateRole()">
+        Update Role
+      </button>
+    </div>
+  </div>
+
+  <!-- ALL HISTORY -->
+  <div class="admin-section">
+    <div class="section-title">
+      <span>{{ histTitle }}</span>
+      <div style="display:flex; gap:8px">
+        <button class="btn btn-danger btn-sm" (click)="clearAll()">Clear All</button>
+        <button class="btn btn-ghost btn-sm" (click)="loadHistory()">↻ Refresh</button>
+      </div>
+    </div>
+
+    <div class="filters-bar" style="margin-bottom:16px">
+      <select [(ngModel)]="filterOp" (ngModelChange)="loadHistory()">
+        <option value="">All Operations</option>
+        <option value="Convert">Convert</option>
+        <option value="Compare">Compare</option>
+        <option value="Add">Add</option>
+        <option value="Subtract">Subtract</option>
+        <option value="Divide">Divide</option>
+      </select>
+      <select [(ngModel)]="filterCat" (ngModelChange)="loadHistory()">
+        <option value="">All Categories</option>
+        <option value="Length">Length</option>
+        <option value="Weight">Weight</option>
+        <option value="Volume">Volume</option>
+        <option value="Temperature">Temperature</option>
+      </select>
+    </div>
+
+    <div class="loading-row" *ngIf="histLoading">Loading...</div>
+    <div class="table-wrap" *ngIf="!histLoading">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>User</th>
+            <th>Op</th>
+            <th>Category</th>
+            <th>Input</th>
+            <th>Result</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngIf="historyList.length === 0">
+            <td colspan="8" class="empty-row">No records found</td>
+          </tr>
+          <tr *ngFor="let h of historyList">
+            <td class="text-muted">#{{ h.id }}</td>
+            <td class="text-muted">{{ h.userId ?? '—' }}</td>
+            <td><span class="op-chip" [ngClass]="h.operation.toLowerCase()">{{ h.operation }}</span></td>
+            <td>{{ h.category }}</td>
+            <td class="text-muted">
+              {{ h.value1 }} {{ h.unit1 }}
+              <span *ngIf="h.value2 != null"> &amp; {{ h.value2 }} {{ h.unit2 }}</span>
+            </td>
+            <td class="text-result">{{ h.resultValue }} {{ h.resultUnit }}</td>
+            <td class="text-muted">{{ formatDate(h.createdAt) }}</td>
+            <td>
+              <button class="btn btn-danger btn-sm" (click)="deleteRecord(h.id)">✕</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+.profile-inner { max-width: 540px; }
+
+.profile-info-card {
+  background: #10101c; border: 1px solid #252538;
+  border-radius: 14px; padding: 28px;
+  margin-bottom: 20px;
+}
+.profile-avatar {
+  width: 68px; height: 68px; border-radius: 50%;
+  background: linear-gradient(135deg, #7c6aff, #ff6a9b);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.7rem; font-weight: 800; color: #fff;
+  margin-bottom: 16px;
+}
+.profile-name  { font-size: 1.4rem; font-weight: 800; margin-bottom: 4px; }
+.profile-email { color: #9090b0; font-family: 'DM Mono', monospace; font-size: .85rem; margin-bottom: 10px; }
+
+.password-card {
+  background: #10101c; border: 1px solid #252538;
+  border-radius: 14px; padding: 28px;
+}
+.password-card h2 { margin-bottom: 20px; }
+
+.msg-box { padding: 12px 16px; border-radius: 8px; font-size: .84rem; margin-bottom: 16px; }
+.msg-box.error   { background: rgba(248,113,113,.1); color: #f87171; border: 1px solid rgba(248,113,113,.2); }
+.msg-box.success { background: rgba(74,222,128,.1);  color: #4ade80; border: 1px solid rgba(74,222,128,.2); }

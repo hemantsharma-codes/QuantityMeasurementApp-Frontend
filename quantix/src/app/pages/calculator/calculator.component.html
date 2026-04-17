@@ -1,0 +1,221 @@
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>Calculator</h1>
+    <p>// convert, compare, and compute measurements</p>
+  </div>
+
+  <!-- Error -->
+  <div class="error-box" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+  <!-- Operation Tabs -->
+  <div class="op-tabs">
+    <button class="op-tab" [class.active]="activeOp==='convert'" (click)="switchOp('convert')">Convert</button>
+    <button class="op-tab" [class.active]="activeOp==='compare'" (click)="switchOp('compare')">Compare</button>
+    <button class="op-tab" [class.active]="activeOp==='add'" (click)="switchOp('add')">Add</button>
+    <button class="op-tab" [class.active]="activeOp==='subtract'" (click)="switchOp('subtract')">Subtract</button>
+    <button class="op-tab" [class.active]="activeOp==='divide'" (click)="switchOp('divide')">Divide</button>
+  </div>
+
+  <!-- CONVERT -->
+  <div class="calc-card" *ngIf="activeOp === 'convert'">
+    <h2><span class="accent">Convert</span> — Unit Conversion</h2>
+    <div class="field">
+      <label>Quantity Type</label>
+      <select [(ngModel)]="conv.type" (ngModelChange)="onTypeChange('conv')">
+        <option *ngFor="let t of quantityTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value</label>
+        <input type="number" [(ngModel)]="conv.value" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>From Unit</label>
+        <select [(ngModel)]="conv.fromUnit">
+          <option *ngFor="let u of getUnits(conv.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>To Unit</label>
+      <select [(ngModel)]="conv.toUnit">
+        <option *ngFor="let u of getUnits(conv.type)" [value]="u">{{ u }}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="doConvert()">Convert →</button>
+    <div class="result-box" *ngIf="convResult">
+      <div class="result-label">Result</div>
+      <div class="result-value">{{ convResult }}</div>
+    </div>
+  </div>
+
+  <!-- COMPARE -->
+  <div class="calc-card" *ngIf="activeOp === 'compare'">
+    <h2><span class="accent">Compare</span> — Equality Check</h2>
+    <div class="field">
+      <label>Quantity Type</label>
+      <select [(ngModel)]="cmp.type" (ngModelChange)="onTypeChange('cmp')">
+        <option *ngFor="let t of quantityTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" [(ngModel)]="cmp.value1" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select [(ngModel)]="cmp.unit1">
+          <option *ngFor="let u of getUnits(cmp.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" [(ngModel)]="cmp.value2" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select [(ngModel)]="cmp.unit2">
+          <option *ngFor="let u of getUnits(cmp.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="doCompare()">Compare →</button>
+    <div class="result-box" *ngIf="cmpResult">
+      <div class="result-label">Result</div>
+      <div class="result-value" [class.equal]="cmpEqual === true" [class.not-equal]="cmpEqual === false">
+        {{ cmpResult }}
+      </div>
+    </div>
+  </div>
+
+  <!-- ADD -->
+  <div class="calc-card" *ngIf="activeOp === 'add'">
+    <h2><span class="accent">Add</span> — Sum Two Quantities</h2>
+    <div class="field">
+      <label>Quantity Type</label>
+      <select [(ngModel)]="add.type" (ngModelChange)="onTypeChange('add')">
+        <option *ngFor="let t of quantityTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" [(ngModel)]="add.value1" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select [(ngModel)]="add.unit1">
+          <option *ngFor="let u of getUnits(add.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" [(ngModel)]="add.value2" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select [(ngModel)]="add.unit2">
+          <option *ngFor="let u of getUnits(add.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="doAdd()">Add →</button>
+    <div class="result-box" *ngIf="addResult">
+      <div class="result-label">Result</div>
+      <div class="result-value">{{ addResult }}</div>
+    </div>
+  </div>
+
+  <!-- SUBTRACT -->
+  <div class="calc-card" *ngIf="activeOp === 'subtract'">
+    <h2><span class="accent">Subtract</span> — Difference</h2>
+    <div class="field">
+      <label>Quantity Type</label>
+      <select [(ngModel)]="sub.type" (ngModelChange)="onTypeChange('sub')">
+        <option *ngFor="let t of quantityTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1</label>
+        <input type="number" [(ngModel)]="sub.value1" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select [(ngModel)]="sub.unit1">
+          <option *ngFor="let u of getUnits(sub.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2</label>
+        <input type="number" [(ngModel)]="sub.value2" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select [(ngModel)]="sub.unit2">
+          <option *ngFor="let u of getUnits(sub.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Result Unit</label>
+      <select [(ngModel)]="sub.resultUnit">
+        <option *ngFor="let u of getUnits(sub.type)" [value]="u">{{ u }}</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" (click)="doSubtract()">Subtract →</button>
+    <div class="result-box" *ngIf="subResult">
+      <div class="result-label">Result</div>
+      <div class="result-value">{{ subResult }}</div>
+    </div>
+  </div>
+
+  <!-- DIVIDE -->
+  <div class="calc-card" *ngIf="activeOp === 'divide'">
+    <h2><span class="accent">Divide</span> — Ratio</h2>
+    <div class="field">
+      <label>Quantity Type</label>
+      <select [(ngModel)]="div.type" (ngModelChange)="onTypeChange('div')">
+        <option *ngFor="let t of quantityTypes" [value]="t">{{ t }}</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 1 (Dividend)</label>
+        <input type="number" [(ngModel)]="div.value1" placeholder="0" />
+      </div>
+      <div class="field">
+        <label>Unit 1</label>
+        <select [(ngModel)]="div.unit1">
+          <option *ngFor="let u of getUnits(div.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Value 2 (Divisor)</label>
+        <input type="number" [(ngModel)]="div.value2" placeholder="cannot be 0" />
+      </div>
+      <div class="field">
+        <label>Unit 2</label>
+        <select [(ngModel)]="div.unit2">
+          <option *ngFor="let u of getUnits(div.type)" [value]="u">{{ u }}</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn btn-primary" (click)="doDivide()">Divide →</button>
+    <div class="result-box" *ngIf="divResult">
+      <div class="result-label">Ratio</div>
+      <div class="result-value">{{ divResult }}</div>
+    </div>
+  </div>
+
+</div>

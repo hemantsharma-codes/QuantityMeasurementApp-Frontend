@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="navbar-logo">Quanti<span>X</span></div>
+
+  <div class="nav-links">
+    <a routerLink="/calculator" routerLinkActive="active">⚗️ Calculator</a>
+    <a routerLink="/history" routerLinkActive="active" *ngIf="isLoggedIn">🕐 History</a>
+    <a routerLink="/profile" routerLinkActive="active" *ngIf="isLoggedIn">👤 Profile</a>
+    <a routerLink="/admin" routerLinkActive="active" *ngIf="isAdmin">🛡️ Admin</a>
+  </div>
+
+  <div class="navbar-right">
+    <div class="user-badge" *ngIf="isLoggedIn">
+      <div class="user-avatar">{{ getInitial() }}</div>
+      <span>{{ user?.username }}</span>
+      <span class="role-pill" [class.admin]="isAdmin">{{ user?.role }}</span>
+    </div>
+    <button class="btn btn-ghost btn-sm" *ngIf="isLoggedIn" (click)="logout()">Logout</button>
+    <a routerLink="/auth" class="btn btn-primary btn-sm" *ngIf="!isLoggedIn">Sign In</a>
+  </div>
+</nav>
